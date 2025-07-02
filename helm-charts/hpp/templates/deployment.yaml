@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: "{{ .Release.Name }}"
   labels:
-    app: {{ .Release.Name }}
+    app: "{{ .Release.Name }}"
   namespace: model-serving
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: "{{ .Release.Name }}"
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: "{{ .Release.Name }}"
     spec:
+      serviceAccountName: "{{ .Release.Name }}-sa"
       containers:
-        - name: {{ .Release.Name }}
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        - name: "{{ .Release.Name }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
